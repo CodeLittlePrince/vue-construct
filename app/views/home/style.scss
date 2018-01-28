@@ -1,0 +1,13 @@
+@import '~common/scss/variable';
+@import '~common/scss/mixin';
+
+.home {
+  color: #333;
+  font-size: $font-size-b;
+  .banner {
+    width: 300px;
+    height: 600px;
+    @include bg-image('img/home', 'jpg');
+    background-size: contain;
+  }
+}
