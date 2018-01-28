@@ -4,10 +4,23 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const exec = require('child_process').execSync
 const pkg = require('./package.json');
 
+console.log(process.env.NODE_ENV)
+// 网站图标配置
+const favicon = path.join(__dirname, 'favicon.ico')
+// 网站版本号设置
+let appVersion = ''
+try {
+  appVersion = exec('git rev-parse --short HEAD').toString().replace(/\n/, '')
+} catch (e) {
+  console.warn('Getting revision FAILED. Maybe this is not a git project.')
+}
+
 const config = Object.assign(webpackConfigBase, {
-  devtool: 'cheap-module-source-map',
+  // You should configure your server to disallow access to the Source Map file for normal users!
+  devtool: 'source-map',
   entry: {
     app: path.join(__dirname, './app/index.js'),
     // 将第三方依赖（node_modules）的库打包
@@ -36,8 +49,11 @@ const config = Object.assign(webpackConfigBase, {
       name: 'vendor',
       filename: 'js/[name].[chunkhash:8].js'
     }),
-    // 指定tpl
+    // html 模板插件
     new HtmlWebpackPlugin({
+      appVersion,
+      favicon,
+      filename: 'index.html',
       template: path.join(__dirname, '/app/index.html'),
       minify: {
         removeComments: true,

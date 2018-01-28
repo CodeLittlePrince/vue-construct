@@ -3,22 +3,14 @@ const devServer = require('webpack-dev-server')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const exec = require('child_process').execSync
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 // 网站图标配置
 const favicon = path.join(__dirname, 'favicon.ico')
-// 网站版本号设置
-let appVersion = ''
-try {
-  appVersion = exec('git rev-parse --short HEAD').toString().replace(/\n/, '')
-} catch (e) {
-  console.warn('Getting revision FAILED. Maybe this is not a git project.')
-}
 
 // __dirname: 总是返回被执行的 js 所在文件夹的绝对路径
 // __filename: 总是返回被执行的 js 的绝对路径
 // process.cwd(): 总是返回运行 node 命令时所在的文件夹的绝对路径
-
 const config = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
@@ -112,7 +104,9 @@ const config = {
         loader: 'url-loader',
         options: {
           limit: 8192,
-          name: 'img/[name].[hash:8].[ext]'
+          name: process.env.NODE_ENV === 'production'
+            ?'img/[name].[hash:8].[ext]'
+            :'img/[name].[ext]'
         }
       },
       {
@@ -120,7 +114,9 @@ const config = {
         loader: 'url-loader',
         options: {
           limit: 8192,
-          name: 'font/[name].[hash:8].[ext]'
+          name: process.env.NODE_ENV === 'production'
+            ?'font/[name].[hash:8].[ext]'
+            :'font/[name].[ext]'
         }
       }
     ]
@@ -132,13 +128,14 @@ const config = {
     }),
     // html 模板插件
     new HtmlWebpackPlugin({
-      appVersion,
       favicon,
       filename: 'index.html',
       template: path.join(__dirname, '/app/index.html')
     }),
     // 热加载插件
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    // 更友好地输出错误信息
+    new FriendlyErrorsPlugin(),
   ],
   devServer: {
     // proxy: {
