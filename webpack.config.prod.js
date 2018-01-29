@@ -7,6 +7,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const exec = require('child_process').execSync
 const pkg = require('./package.json');
+// 为了抽离出两份CSS，创建两份ExtractTextPlugin
+// base作为基础的css，基本不变，所以，可以抽离出来充分利用浏览器缓存
+// app作为迭代的css，会经常改变
+const extractBaseCSS = new ExtractTextPlugin({filename:'static/css/base.[chunkhash:8].css', allChunks: true})
+const extractAppCSS = new ExtractTextPlugin({filename:'static/css/app.[chunkhash:8].css', allChunks: true})
 
 // 网站图标配置
 const favicon = path.join(__dirname, 'favicon.ico')
@@ -32,6 +37,91 @@ const config = Object.assign(webpackConfigBase, {
     publicPath: path.join(__dirname, 'dist/'),
     filename: 'static/js/[name].[chunkhash:8].js'
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+        // https://babeljs.io/docs/plugins/transform-runtime/
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader',
+        options: {
+          extractCSS: true,
+          loaders: {
+            scss: extractAppCSS.extract({
+              fallback: 'vue-style-loader',
+              use: [
+                {
+                  loader: "css-loader",
+                  options: {
+                    sourceMap: true
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true
+                  }
+                },
+                {
+                  loader: "sass-loader",
+                  options: {
+                    sourceMap: true
+                  }
+                }
+              ]
+            })
+          }
+        }
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: extractBaseCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: "sass-loader",
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: 'static/img/[name].[hash:8].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: 'static/font/[name].[hash:8].[ext]'
+        }
+      }
+    ]
+  },
   plugins: [
     // Scope hosting
     new webpack.optimize.ModuleConcatenationPlugin(),
@@ -40,10 +130,8 @@ const config = Object.assign(webpackConfigBase, {
       path.join(__dirname, '/dist')
     ),
     // 抽离出css
-    new ExtractTextPlugin({
-      filename: 'static/css/[name].[chunkhash:8].css',
-      allChunks: true
-    }),
+    extractBaseCSS,
+    extractAppCSS,
     // 提供公共代码vendor
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -67,7 +155,7 @@ const config = Object.assign(webpackConfigBase, {
       }
     }),
     // 可视化分析
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
     // 加署名
     new webpack.BannerPlugin("Copyright by 子咻 https://github.com/CodeLittlePrince/blog"),
   ]

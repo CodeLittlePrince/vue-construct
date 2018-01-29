@@ -1,7 +1,8 @@
 // 多倍屏背景图
 @mixin bg-image($url, $format: 'png') {
   background-image: url($url + "@2x." + $format);
-  @media (min-device-pixel-ratio: 3) {
+  // https://github.com/postcss/autoprefixer/issues/521
+  @media (min-resolution: 3dppx) {
     background-image: url($url + "@3x." + $format);
   }
 }

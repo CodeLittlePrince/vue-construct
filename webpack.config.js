@@ -48,66 +48,64 @@ const config = {
         options: {
           extractCSS: true,
           loaders: {
-            css: ExtractTextPlugin.extract({
-              fallback: 'vue-style-loader',
-              use: [
-                {
-                  loader: "css-loader",
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: "sass-loader",
-                  options: {
-                    sourceMap: true
-                  }
+            scss: [
+              {
+                loader: 'vue-style-loader'
+              },
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true
                 }
-              ]
-            })
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: true
+                }
+              },
+              {
+                loader: "sass-loader",
+                options: {
+                  sourceMap: true
+                }
+              }
+            ]
           }
         }
       },
       {
         test: /\.(css|scss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true
-              }
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
             }
-          ]
-        })
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 8192,
-          name: process.env.NODE_ENV === 'production'
-            ?'static/img/[name].[hash:8].[ext]'
-            :'static/img/[name].[ext]'
+          name: 'static/img/[name].[ext]'
         }
       },
       {
@@ -115,18 +113,12 @@ const config = {
         loader: 'url-loader',
         options: {
           limit: 8192,
-          name: process.env.NODE_ENV === 'production'
-            ?'static/font/[name].[hash:8].[ext]'
-            :'static/font/[name].[ext]'
+          name: 'static/font/[name].[ext]'
         }
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'index.bundle.css',
-      disable: true
-    }),
     // html 模板插件
     new HtmlWebpackPlugin({
       favicon,

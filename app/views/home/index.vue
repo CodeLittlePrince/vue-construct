@@ -4,11 +4,11 @@
       {{ `This is home` | filterSample('and text has been') }}
     </div>
     <div class="banner">banner</div>
+    <div class="block"></div>
   </div>
 </template>
 
 <script>
-  import './style'
   import mixinsSample from 'mixins/sample.js'
 
   export default {
@@ -17,7 +17,9 @@
 </script>
 
 <style lang="scss">
-  .banner {
+  @import './style.scss';
+
+  .block {
     width: 200px;
     height: 200px;
     background: rgb(21, 204, 189);
