@@ -4,10 +4,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const exec = require('child_process').execSync
 const pkg = require('./package.json');
 
-console.log(process.env.NODE_ENV)
 // 网站图标配置
 const favicon = path.join(__dirname, 'favicon.ico')
 // 网站版本号设置
@@ -30,7 +30,7 @@ const config = Object.assign(webpackConfigBase, {
     path: path.join(__dirname, 'dist'),
     // publicPath: 'https://cdn.self.com'
     publicPath: path.join(__dirname, 'dist/'),
-    filename: 'js/[name].[chunkhash:8].js'
+    filename: 'static/js/[name].[chunkhash:8].js'
   },
   plugins: [
     // Scope hosting
@@ -41,13 +41,13 @@ const config = Object.assign(webpackConfigBase, {
     ),
     // 抽离出css
     new ExtractTextPlugin({
-      filename: 'css/[name].[chunkhash:8].css',
+      filename: 'static/css/[name].[chunkhash:8].css',
       allChunks: true
     }),
     // 提供公共代码vendor
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'js/[name].[chunkhash:8].js'
+      filename: 'static/js/[name].[chunkhash:8].js'
     }),
     // html 模板插件
     new HtmlWebpackPlugin({
@@ -66,6 +66,8 @@ const config = Object.assign(webpackConfigBase, {
         NODE_ENV: '"production"'
       }
     }),
+    // 可视化分析
+    // new BundleAnalyzerPlugin(),
     // 加署名
     new webpack.BannerPlugin("Copyright by 子咻 https://github.com/CodeLittlePrince/blog"),
   ]

@@ -46,6 +46,7 @@ const config = {
         exclude: /node_modules/,
         loader: 'vue-loader',
         options: {
+          extractCSS: true,
           loaders: {
             css: ExtractTextPlugin.extract({
               fallback: 'vue-style-loader',
@@ -105,8 +106,8 @@ const config = {
         options: {
           limit: 8192,
           name: process.env.NODE_ENV === 'production'
-            ?'img/[name].[hash:8].[ext]'
-            :'img/[name].[ext]'
+            ?'static/img/[name].[hash:8].[ext]'
+            :'static/img/[name].[ext]'
         }
       },
       {
@@ -115,8 +116,8 @@ const config = {
         options: {
           limit: 8192,
           name: process.env.NODE_ENV === 'production'
-            ?'font/[name].[hash:8].[ext]'
-            :'font/[name].[ext]'
+            ?'static/font/[name].[hash:8].[ext]'
+            :'static/font/[name].[ext]'
         }
       }
     ]
@@ -135,7 +136,7 @@ const config = {
     // 热加载插件
     new webpack.HotModuleReplacementPlugin(),
     // 更友好地输出错误信息
-    new FriendlyErrorsPlugin(),
+    new FriendlyErrorsPlugin()
   ],
   devServer: {
     // proxy: {
