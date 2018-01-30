@@ -14,7 +14,10 @@ const favicon = path.join(__dirname, 'favicon.ico')
 const config = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: path.join(__dirname, 'app/index.js')
+    app: [
+      'babel-polyfill',
+      path.join(__dirname, 'app/index.js')
+    ]
   },
   output: {
     path: path.join(__dirname, 'dev'),

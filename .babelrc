@@ -9,17 +9,13 @@
             "last 2 versions",
             "not ie <= 8"
           ]
-        }
+        },
+        "modules": false,
+        "useBuiltIns": true
       }
     ]
   ],
   "plugins": [
-    ["transform-runtime", {
-      "helpers": false,
-      "polyfill": false,
-      "regenerator": true,
-      "moduleName": "babel-runtime"
-    }],
     "transform-object-rest-spread",
     "syntax-dynamic-import"
   ]
