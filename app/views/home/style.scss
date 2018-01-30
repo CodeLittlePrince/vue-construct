@@ -2,12 +2,89 @@
 @import '~common/scss/mixin';
 
 .home {
-  color: #333;
-  font-size: $font-size-b;
-  .banner {
-    width: 300px;
-    height: 600px;
-    @include bg-image('img/home', 'jpg');
-    background-size: contain;
+  .content {
+    position: relative;
+    width: 1200px;
+    height: 480px;
+    margin: 0 auto;
+    h1 {
+      position: absolute;
+      bottom: 30px;
+      left: 120px;
+      font-size: $font-size-amazing;
+      text-align: center;
+      margin-top: 50px;
+      color: $color-text-gray;
+      font-weight: bolder;
+      span {
+        font-size: $font-size-xl;
+      }
+    }
+    .cover {
+      position: absolute;
+      z-index: 2;
+      right: 62px;
+      bottom: 90px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      @include bg-image('img/home');
+      background-size: contain;
+      animation-duration: 1s;
+    }
   }
+}
+
+
+// 动画
+@keyframes jello {
+  from,
+  11.1%,
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  22.2% {
+    -webkit-transform: skewX(-12.5deg) skewY(-12.5deg);
+    transform: skewX(-12.5deg) skewY(-12.5deg);
+  }
+
+  33.3% {
+    -webkit-transform: skewX(6.25deg) skewY(6.25deg);
+    transform: skewX(6.25deg) skewY(6.25deg);
+  }
+
+  44.4% {
+    -webkit-transform: skewX(-3.125deg) skewY(-3.125deg);
+    transform: skewX(-3.125deg) skewY(-3.125deg);
+  }
+
+  55.5% {
+    -webkit-transform: skewX(1.5625deg) skewY(1.5625deg);
+    transform: skewX(1.5625deg) skewY(1.5625deg);
+  }
+
+  66.6% {
+    -webkit-transform: skewX(-0.78125deg) skewY(-0.78125deg);
+    transform: skewX(-0.78125deg) skewY(-0.78125deg);
+  }
+
+  77.7% {
+    -webkit-transform: skewX(0.390625deg) skewY(0.390625deg);
+    transform: skewX(0.390625deg) skewY(0.390625deg);
+  }
+
+  88.8% {
+    -webkit-transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+  }
+}
+
+.jello {
+  -webkit-animation-name: jello;
+  animation-name: jello;
+  -webkit-transform-origin: center;
+  transform-origin: center;
 }

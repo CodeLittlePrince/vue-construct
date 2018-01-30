@@ -15,7 +15,7 @@ const config = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
-      'babel-polyfill',
+      'babel-polyfill', // 这里是配合babel-present-env导入的动态babel-polyfill,因此npm需dev依赖
       path.join(__dirname, 'app/index.js')
     ]
   },

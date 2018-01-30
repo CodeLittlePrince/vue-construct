@@ -27,8 +27,8 @@ const config = Object.assign(webpackConfigBase, {
   // You should configure your server to disallow access to the Source Map file for normal users!
   devtool: 'source-map',
   entry: {
-    app: path.join(__dirname, './app/index.js'),
-    // 将第三方依赖（node_modules）的库打包
+    app: path.join(__dirname, 'app/index.js'),
+    // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
     vendor: Object.keys(pkg.dependencies)
   },
   output: {
@@ -127,7 +127,7 @@ const config = Object.assign(webpackConfigBase, {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // 删除build文件夹
     new CleanWebpackPlugin(
-      path.join(__dirname, '/dist')
+      path.join(__dirname, 'dist')
     ),
     // 抽离出css
     extractBaseCSS,
@@ -142,7 +142,7 @@ const config = Object.assign(webpackConfigBase, {
       appVersion,
       favicon,
       filename: 'index.html',
-      template: path.join(__dirname, '/app/index.html'),
+      template: path.join(__dirname, 'app/index.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: false
