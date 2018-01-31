@@ -34,6 +34,7 @@
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
+    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
     "postcss": "^6.0.16",
