@@ -1,4 +1,4 @@
-function directiveSample(el, binding, vnode) {
+function directiveSample() {
   console.log('%cdirectives works', 'color: green')
 }
 

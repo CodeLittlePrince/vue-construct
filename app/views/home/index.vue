@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="content">
+    <div class="content jello">
       <h1 v-directive-sample:arg="'msg'">
         {{ `Vue` | filterSample('前端架构') }}
         <span>- by 咻</span>
       </h1>
-      <div class="cover jello"></div>
+      <div class="cover"></div>
     </div>
   </div>
 </template>

@@ -6,15 +6,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const exec = require('child_process').execSync
-const pkg = require('./package.json');
+const pkg = require('./package.json')
 // 为了抽离出两份CSS，创建两份ExtractTextPlugin
 // base作为基础的css，基本不变，所以，可以抽离出来充分利用浏览器缓存
 // app作为迭代的css，会经常改变
 const extractBaseCSS = new ExtractTextPlugin({filename:'static/css/base.[chunkhash:8].css', allChunks: true})
 const extractAppCSS = new ExtractTextPlugin({filename:'static/css/app.[chunkhash:8].css', allChunks: true})
 
+// 减少路径书写
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 // 网站图标配置
-const favicon = path.join(__dirname, 'favicon.ico')
+const favicon = resolve('favicon.ico')
 // 网站版本号设置
 let appVersion = ''
 try {
@@ -27,23 +31,22 @@ const config = Object.assign(webpackConfigBase, {
   // You should configure your server to disallow access to the Source Map file for normal users!
   devtool: 'source-map',
   entry: {
-    app: path.join(__dirname, 'app/index.js'),
+    app: resolve('app/index.js'),
     // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
     vendor: Object.keys(pkg.dependencies)
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: resolve('dist'),
     // publicPath: 'https://cdn.self.com'
-    publicPath: path.join(__dirname, 'dist/'),
+    publicPath: resolve('dist/'),
     filename: 'static/js/[name].[chunkhash:8].js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: [resolve('app')],
         loader: 'babel-loader'
-        // https://babeljs.io/docs/plugins/transform-runtime/
       },
       {
         test: /\.vue$/,
@@ -56,7 +59,7 @@ const config = Object.assign(webpackConfigBase, {
               fallback: 'vue-style-loader',
               use: [
                 {
-                  loader: "css-loader",
+                  loader: 'css-loader',
                   options: {
                     sourceMap: true
                   }
@@ -68,7 +71,7 @@ const config = Object.assign(webpackConfigBase, {
                   }
                 },
                 {
-                  loader: "sass-loader",
+                  loader: 'sass-loader',
                   options: {
                     sourceMap: true
                   }
@@ -84,7 +87,7 @@ const config = Object.assign(webpackConfigBase, {
           fallback: 'style-loader',
           use: [
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 sourceMap: true
               }
@@ -96,7 +99,7 @@ const config = Object.assign(webpackConfigBase, {
               }
             },
             {
-              loader: "sass-loader",
+              loader: 'sass-loader',
               options: {
                 sourceMap: true
               }
@@ -127,7 +130,7 @@ const config = Object.assign(webpackConfigBase, {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // 删除build文件夹
     new CleanWebpackPlugin(
-      path.join(__dirname, 'dist')
+      resolve('dist')
     ),
     // 抽离出css
     extractBaseCSS,
@@ -142,7 +145,7 @@ const config = Object.assign(webpackConfigBase, {
       appVersion,
       favicon,
       filename: 'index.html',
-      template: path.join(__dirname, 'app/index.html'),
+      template: resolve('app/index.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: false
@@ -157,7 +160,7 @@ const config = Object.assign(webpackConfigBase, {
     // 可视化分析
     new BundleAnalyzerPlugin(),
     // 加署名
-    new webpack.BannerPlugin("Copyright by 子咻 https://github.com/CodeLittlePrince/blog"),
+    new webpack.BannerPlugin('Copyright by 子咻 https://github.com/CodeLittlePrince/blog'),
   ]
 })
 

@@ -1,12 +1,15 @@
 const webpack = require('webpack')
-const devServer = require('webpack-dev-server')
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
+// 减少路径书写
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
 // 网站图标配置
-const favicon = path.join(__dirname, 'favicon.ico')
+const favicon = resolve('favicon.ico')
 
 // __dirname: 总是返回被执行的 js 所在文件夹的绝对路径
 // __filename: 总是返回被执行的 js 的绝对路径
@@ -16,33 +19,35 @@ const config = {
   entry: {
     app: [
       'babel-polyfill', // 这里是配合babel-present-env导入的动态babel-polyfill,因此npm需dev依赖
-      path.join(__dirname, 'app/index.js')
+      resolve('app/index.js')
     ]
   },
   output: {
-    path: path.join(__dirname, 'dev'),
+    path: resolve('dev'),
     filename: 'index.bundle.js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.scss', '.css'],
     alias: {
-      api: path.join(__dirname, 'app/api/'),
-      common: path.join(__dirname, 'app/common/'),
-      views: path.join(__dirname, 'app/views/'),
-      components: path.join(__dirname, 'app/components/'),
-      componentsBase: path.join(__dirname, 'app/componentsBase/'),
-      directives: path.join(__dirname, 'app/directives/'),
-      filters: path.join(__dirname, 'app/filters/'),
-      mixins: path.join(__dirname, 'app/mixins/')
+      api: resolve('app/api/'),
+      common: resolve('app/common/'),
+      views: resolve('app/views/'),
+      components: resolve('app/components/'),
+      componentsBase: resolve('app/componentsBase/'),
+      directives: resolve('app/directives/'),
+      filters: resolve('app/filters/'),
+      mixins: resolve('app/mixins/')
     }
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-        // https://babeljs.io/docs/plugins/transform-runtime/
+        include: [resolve('app')],
+        use: [
+          'babel-loader',
+          'eslint-loader'
+        ]
       },
       {
         test: /\.vue$/,
@@ -68,7 +73,7 @@ const config = {
                 }
               },
               {
-                loader: "sass-loader",
+                loader: 'sass-loader',
                 options: {
                   sourceMap: true
                 }
@@ -96,7 +101,7 @@ const config = {
             }
           },
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: true
             }
@@ -126,7 +131,7 @@ const config = {
     new HtmlWebpackPlugin({
       favicon,
       filename: 'index.html',
-      template: path.join(__dirname, '/app/index.html')
+      template: resolve('app/index.html')
     }),
     // 热加载插件
     new webpack.HotModuleReplacementPlugin(),
@@ -145,7 +150,7 @@ const config = {
     host: '0.0.0.0',
     port: '9999',
     disableHostCheck: true, // 为了手机可以访问
-    contentBase: path.join(__dirname, 'dev'), // 本地服务器所加载的页面所在的目录
+    contentBase: resolve('dev'), // 本地服务器所加载的页面所在的目录
     historyApiFallback: true, // 为了SPA应用服务
     inline: true, //实时刷新
     hot: true  // 使用热加载插件 HotModuleReplacementPlugin
