@@ -13,17 +13,18 @@
 <script>
   import axios from 'axios'
   import mixinsSample from 'mixins/sample'
+  import homeApi from 'api/home'
 
   export default {
     mixins: [mixinsSample],
     mounted() {
-      axios.get('/api/home/hello')
+      axios.get(homeApi.hello)
         .then(res => {
           const data = res.data
           console.log(`%c${data.msg}`, 'color: blue')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          console.log('%c少年，是不是忘了npm run mock?', 'color: cadetblue')
         })
     }
   }
