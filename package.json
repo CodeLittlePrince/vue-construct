@@ -4,6 +4,7 @@
   "description": "study",
   "main": "index.js",
   "scripts": {
+    "mock": "nodemon ./mock/server.js",
     "dev": "webpack-dev-server --progress --colors --open --config webpack.config.js",
     "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js"
   },
@@ -20,6 +21,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "boom": "^7.1.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.9",
     "eslint": "^4.16.0",
@@ -29,7 +31,11 @@
     "file-loader": "^1.1.6",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.14.11",
     "postcss": "^6.0.16",
     "postcss-loader": "^2.0.10",
     "sass-loader": "^6.0.6",
@@ -43,6 +49,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
   }

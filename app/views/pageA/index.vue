@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
+  <div class="pageA">
     <div class="content jello">
-      <h1 v-directive-sample:arg="'msg'">
-        {{ `Vue` | filterSample('前端架构') }}
+      <h1>
+        Vue页面-A &nbsp;
         <span>- by 咻</span>
       </h1>
       <div class="cover"></div>

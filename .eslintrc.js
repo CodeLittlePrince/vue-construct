@@ -1,7 +1,8 @@
 // 创建这个文件的话，本王推荐用eslint --init创建
 module.exports = {
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
     },
     // https://stackoverflow.com/questions/38296761/how-to-support-es7-in-eslint
     // 为了让eslint支持es7或更高的语法
