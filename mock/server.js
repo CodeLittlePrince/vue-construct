@@ -31,4 +31,5 @@ app.on('error', (err, ctx) => {
   console.log('server error', err, ctx)
 })
 
+// 注意：这里的端口要和webpack里devServer的端口对应
 app.listen(7777)

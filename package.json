@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "mock": "nodemon ./mock/server.js",
-    "dev": "webpack-dev-server --progress --colors --open --config webpack.config.js",
+    "dev": "webpack-dev-server --progress --colors --open --config webpack.config.dev.js",
     "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js"
   },
   "author": "codelittleprince",

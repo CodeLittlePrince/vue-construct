@@ -9,7 +9,7 @@ Vue前端架构
 ----------------------- | ------
 vue v2.5                | data binding
 vue-router v3           | vue路由
-webpack v3              | 本地发开、打包发布
+webpack v3              | 本地发开、打包发布（webpack v4虽然已经发布，不过还是beta版，技术选型要稳）
 webpack-dev-server v2   | 本地启服务
 webpack-bundle-analyzer | 打包后文件分析
 koa v2                  | 本地模拟数据接口
