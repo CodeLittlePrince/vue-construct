@@ -15,19 +15,24 @@ const favicon = resolve('favicon.ico')
 // __filename: 总是返回被执行的 js 的绝对路径
 // process.cwd(): 总是返回运行 node 命令时所在的文件夹的绝对路径
 const config = {
+  // sourcemap 模式
   devtool: 'cheap-module-eval-source-map',
+  // 入口
   entry: {
     app: [
       'babel-polyfill', // 这里是配合babel-present-env导入的动态babel-polyfill,因此npm需dev依赖
       resolve('app/index.js')
     ]
   },
+  // 输出
   output: {
     path: resolve('dev'),
     filename: 'index.bundle.js'
   },
   resolve: {
+    // 扩展名，比如import 'app.vue'，扩展后只需要写成import 'app'就可以了
     extensions: ['.js', '.vue', '.scss', '.css'],
+    // 取路径别名，方便在业务代码中import
     alias: {
       api: resolve('app/api/'),
       common: resolve('app/common/'),
@@ -39,6 +44,7 @@ const config = {
       mixins: resolve('app/mixins/')
     }
   },
+  // loaders处理
   module: {
     rules: [
       {
@@ -133,7 +139,7 @@ const config = {
       filename: 'index.html',
       template: resolve('app/index.html')
     }),
-    // 热加载插件
+    // 热替换插件
     new webpack.HotModuleReplacementPlugin(),
     // 更友好地输出错误信息
     new FriendlyErrorsPlugin()
@@ -151,7 +157,7 @@ const config = {
     port: '9999',
     disableHostCheck: true, // 为了手机可以访问
     contentBase: resolve('dev'), // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 为了SPA应用服务
+    // historyApiFallback: true, // 为了SPA应用服务
     inline: true, //实时刷新
     hot: true  // 使用热加载插件 HotModuleReplacementPlugin
   }
