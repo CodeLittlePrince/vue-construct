@@ -5,7 +5,9 @@
         {{ `Vue` | filterSample('前端架构') }}
         <span>- by 咻</span>
       </h1>
-      <div class="cover"></div>
+      <a href="https://github.com/CodeLittlePrince/blog" target="__blank">
+        <div class="cover"></div>
+      </a>
     </div>
   </div>
 </template>
