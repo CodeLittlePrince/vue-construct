@@ -24,7 +24,7 @@
           console.log(`%c${data.msg}`, 'color: blue')
         })
         .catch(() => {
-          console.log('%c少年，是不是忘了npm run mock?', 'color: cadetblue')
+          console.warn('%c少年，是不是忘了npm run mock?', 'color: cadetblue')
         })
     }
   }

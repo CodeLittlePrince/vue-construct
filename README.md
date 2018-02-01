@@ -37,4 +37,18 @@ ToDo
 4. tree shaking。
 5. dynamic import，代码不会打包到一个js文件里，而会分成n个按需加载js。
 
+使用方法
+---
+### 开发
+1. 模拟数据
+`npm run mock`
+2. 页面开发
+`npm run dev`
+
+### 测试
+ToDo
+
+### 发布
+`npm run prod`
+
 ![Vue前端架构](https://github.com/CodeLittlePrince/ImagesForGithub/blob/master/vue-construct-1.png?raw=true)
