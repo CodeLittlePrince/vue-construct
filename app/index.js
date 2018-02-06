@@ -1,3 +1,4 @@
+import 'babel-polyfill' // https://babeljs.io/docs/plugins/preset-env/#usebuiltins
 import 'common/scss/index'
 import Vue from 'vue'
 import router from './router'

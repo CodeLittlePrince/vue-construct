@@ -8,10 +8,7 @@ const config = Object.assign(webpackConfigBase.config, {
   devtool: 'cheap-module-eval-source-map',
   // 入口
   entry: {
-    app: [
-      'babel-polyfill', // 这里是配合babel-present-env导入的动态babel-polyfill,因此npm需dev依赖
-      webpackConfigBase.resolve('app/index.js')
-    ]
+    app: webpackConfigBase.resolve('app/index.js')
   },
   // 输出
   output: {
