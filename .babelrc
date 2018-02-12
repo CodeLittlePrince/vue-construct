@@ -17,6 +17,7 @@
   ],
   "plugins": [
     "transform-object-rest-spread",
-    "syntax-dynamic-import"
+    "syntax-dynamic-import",
+    ["transform-class-properties", { "spec": true }]
   ]
 }
