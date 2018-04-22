@@ -41,4 +41,16 @@ describe('utils/dom', () => {
     dom.removeClass(ele, 'tom')
     expect(ele.className).to.be.equal('base')
   })
+  // 测试noce
+  it('once', () => {
+    const ele = document.createElement('div')
+    const callback = sinon.spy()
+    dom.once(ele, 'click', callback)
+    // 点击一次
+    ele.click()
+    expect(callback).to.have.been.calledOnce
+    // 再点击一次，预期应该是不调用callback的，所以依然为calledOnce
+    ele.click()
+    expect(callback).to.have.been.calledOnce
+  })
 })

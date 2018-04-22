@@ -10,6 +10,16 @@ const trim = function(string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
 }
 
+export const once = function(el, event, fn) {
+  var listener = function() {
+    if (fn) {
+      fn.apply(this, arguments)
+    }
+    el.removeEventListener(event, listener)
+  }
+  el.addEventListener(event, listener)
+}
+
 export function hasClass(el, cls) {
   if (!el || !cls) return false
   if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.')
