@@ -16,10 +16,17 @@
   import axios from 'axios'
   import mixinsSample from 'mixins/sample'
   import homeApi from 'api/home'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     mixins: [mixinsSample],
+    computed: {
+      ...mapGetters([
+        'name'
+      ])
+    },
     mounted() {
+      // ajax get data
       axios.get(homeApi.hello)
         .then(res => {
           const data = res.data
@@ -28,6 +35,15 @@
         .catch(() => {
           console.warn('%c少年，是不是忘了npm run mock?', 'color: cadetblue')
         })
+      // vuex action
+      this.ageIncrease()
+      // vuex getter
+      console.log(`%cvuex getter ${this.name}`, 'color: pink')
+    },
+    methods: {
+      ...mapActions([
+        'ageIncrease'
+      ])
     }
   }
 </script>
