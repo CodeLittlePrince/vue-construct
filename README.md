@@ -46,6 +46,9 @@ ToDo
 `npm run dev`
 
 ### 测试
+1. 单元测试
+`npm run test:unit`
+2. e2e
 ToDo
 
 ### 发布
