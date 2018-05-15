@@ -49,7 +49,7 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 ### 测试
 1. 单元测试
 `npm run test:unit`
-2. e2e
+2. e2e测试
 `npm run mock`
 `npm run dev`
 `npm run test:e2e`
