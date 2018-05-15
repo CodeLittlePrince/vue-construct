@@ -7,7 +7,8 @@
     "mock": "nodemon ./mock/server.js",
     "dev": "webpack-dev-server --progress --colors --open --config webpack.config.dev.js",
     "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js",
-    "test:unit": "karma start test/unit/karma.conf.js"
+    "test:unit": "karma start test/unit/karma.conf.js",
+    "test:e2e": "mocha ./test/e2e/index.js"
   },
   "author": "codelittleprince",
   "license": "MIT",
@@ -48,6 +49,7 @@
     "koa-router": "^7.4.0",
     "mocha": "^5.0.4",
     "mockjs": "^1.0.1-beta3",
+    "nightmare": "^3.0.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
     "postcss": "^6.0.16",
