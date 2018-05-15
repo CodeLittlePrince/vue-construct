@@ -28,7 +28,8 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 6. 使用mockjs模拟接口返回数据。
 
 ### 测试
-ToDo
+1. 单元测试
+2. e2e测试
 
 ### 发布
 1. 将第三方js库打包成vendor.js，从而使项目业务代码修改也不会影响基本稳定的三方js代码，充分利用浏览器缓存。
@@ -49,7 +50,10 @@ ToDo
 1. 单元测试
 `npm run test:unit`
 2. e2e
-ToDo
+`npm run mock`
+`npm run dev`
+`npm run test:e2e`
+因为e2e其实就是正常访问网页，所以启动起来略繁琐
 
 ### 发布
 `npm run prod`
