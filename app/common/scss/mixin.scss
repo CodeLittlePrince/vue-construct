@@ -1,4 +1,4 @@
-// 多倍屏背景图
+// 多倍屏背景图（除了接口获取的图，所有图都用背景图方案）
 @mixin bg-image($url, $format: 'png') {
   background-image: url($url + "." + $format);
   // https://github.com/postcss/autoprefixer/issues/521

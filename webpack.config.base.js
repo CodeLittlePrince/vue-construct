@@ -13,8 +13,8 @@ const extractBaseCSS =
       disable: !isProduction // 开发环境下不抽离css
     }
   )
-const extractAppCSS
-  = new ExtractTextPlugin(
+const extractAppCSS =
+  new ExtractTextPlugin(
     {
       filename:'static/css/app.[chunkhash:8].css',
       allChunks: true,
