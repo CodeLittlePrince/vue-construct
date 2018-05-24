@@ -9,7 +9,7 @@ const data = Mock.mock({
 const img = Mock.Random.image('200x100')
 
 module.exports = {
-  msg: 'mock hello api works',
+  msg: 'mock hello api works!!',
   data: data,
   imgUrl: img
 }
