@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import cNav from 'components/nav';
+import cNav from 'components/nav'
 
 export default {
   components: {
