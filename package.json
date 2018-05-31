@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "mock": "nodemon ./mock/server.js",
-    "dev": "webpack-dev-server --progress --colors --open --config webpack.config.dev.js",
+    "watch": "webpack-dev-server --progress --colors --open --config webpack.config.dev.js",
+    "dev": "concurrently 'npm run mock' 'npm run watch'",
     "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js",
     "test:unit": "karma start test/unit/karma.conf.js",
     "test:e2e": "mocha ./test/e2e/index.js",
@@ -75,6 +76,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "concurrently": "^3.5.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
