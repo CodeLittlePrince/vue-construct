@@ -8,7 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractBaseCSS =
   new ExtractTextPlugin(
     {
-      filename:'static/css/base.[chunkhash:8].css',
+      filename:'static/css/base.[contenthash:8].css',
       allChunks: true,
       disable: !isProduction // 开发环境下不抽离css
     }
@@ -16,7 +16,7 @@ const extractBaseCSS =
 const extractAppCSS =
   new ExtractTextPlugin(
     {
-      filename:'static/css/app.[chunkhash:8].css',
+      filename:'static/css/app.[contenthash:8].css',
       allChunks: true,
       disable: !isProduction // 开发环境下不抽离css
     }
