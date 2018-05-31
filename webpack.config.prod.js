@@ -38,10 +38,9 @@ const config = Object.assign(webpackConfigBase.config, {
     // 抽离出css
     webpackConfigBase.extractAppCSS,
     webpackConfigBase.extractBaseCSS,
-    // 提取公共代码vendor
+    // 提取vendor,和公共commons
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'static/js/[name].[chunkhash:8].js'
+      names: ['vendor', 'commons']
     }),
     // html 模板插件
     new HtmlWebpackPlugin({
