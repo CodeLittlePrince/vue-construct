@@ -10,7 +10,7 @@
     "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js",
     "test:unit": "karma start test/unit/karma.conf.js",
     "test:e2e": "mocha ./test/e2e/index.js",
-    "lint": "eslint --ext .vue,.js app/**"
+    "lint": "eslint --ext .vue,.js src/**"
   },
   "husky": {
     "hooks": {
