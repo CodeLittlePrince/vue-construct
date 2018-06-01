@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
-const pkg = require('./package.json')
+const pkg = require('../package.json')
 const ANALYZE = process.env.ANALYZE
 
 // 网站版本号设置

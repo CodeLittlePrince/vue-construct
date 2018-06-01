@@ -24,7 +24,7 @@ const extractAppCSS =
 
 // 减少路径书写
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, '../' + dir)
 }
 
 // 网站图标配置

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "mock": "nodemon ./mock/server.js",
-    "watch": "webpack-dev-server --progress --colors --open --config webpack.config.dev.js",
+    "watch": "webpack-dev-server --progress --colors --open --config webpack/webpack.config.dev.js",
     "dev": "concurrently 'npm run mock' 'npm run watch'",
-    "analyze": "NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack.config.prod.js",
-    "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack.config.prod.js",
+    "analyze": "NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack/webpack.config.prod.js",
+    "prod": "NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.config.prod.js",
     "test:unit": "karma start test/unit/karma.conf.js",
     "test:e2e": "mocha ./test/e2e/index.js",
     "lint": "eslint --ext .vue,.js src/**"
