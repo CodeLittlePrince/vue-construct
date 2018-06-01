@@ -95,6 +95,7 @@ const config = {
       },
       {
         test: /\.(css|scss)$/,
+        include: [resolve('src/common/scss')],
         use: extractBaseCSS.extract({
           fallback: 'style-loader',
           use: [
