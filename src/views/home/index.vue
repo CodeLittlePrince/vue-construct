@@ -15,7 +15,6 @@
 <script>
   import axios from 'axios'
   import mixinsSample from 'mixins/sample'
-  import homeApi from 'api/home'
   import { mapGetters, mapActions } from 'vuex'
 
   export default {
@@ -27,7 +26,7 @@
     },
     mounted() {
       // ajax get data
-      axios.get(homeApi.hello)
+      axios.get('/api/home/hello')
         .then(res => {
           const data = res.data
           console.log(`%c${data.msg}`, 'color: blue')

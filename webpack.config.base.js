@@ -39,7 +39,6 @@ const config = {
     extensions: ['.js', '.vue', '.scss', '.css'],
     // 取路径别名，方便在业务代码中import
     alias: {
-      api: resolve('src/api/'),
       common: resolve('src/common/'),
       views: resolve('src/views/'),
       components: resolve('src/components/'),
