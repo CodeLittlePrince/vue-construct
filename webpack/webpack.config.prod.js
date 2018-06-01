@@ -34,7 +34,10 @@ const config = Object.assign(webpackConfigBase.config, {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // 删除build文件夹
     new CleanWebpackPlugin(
-      webpackConfigBase.resolve('dist')
+      'dist',
+      {
+        root: webpackConfigBase.resolve('')
+      }
     ),
     // 抽离出css
     webpackConfigBase.extractAppCSS,
