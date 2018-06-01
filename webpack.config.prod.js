@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
 const pkg = require('./package.json')
+const ANALYZE = process.env.ANALYZE
 
 // 网站版本号设置
 let appVersion = ''
@@ -59,11 +60,16 @@ const config = Object.assign(webpackConfigBase.config, {
         NODE_ENV: '"production"'
       }
     }),
-    // 可视化分析
-    new BundleAnalyzerPlugin(),
     // 加署名
     new webpack.BannerPlugin('Copyright by 子咻 https://github.com/CodeLittlePrince/blog'),
   ]
 })
+
+// analyze的话，进行文件可视化分析
+if (ANALYZE === 'active') {
+  config.plugins.push(
+    new BundleAnalyzerPlugin()
+  )
+}
 
 module.exports = config
