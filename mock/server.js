@@ -1,3 +1,4 @@
+const proxyConfig = require('../webpack/proxy.config')
 const Koa = require('koa')
 // 使用router
 const Router = require('koa-router')
@@ -32,4 +33,5 @@ app.on('error', (err, ctx) => {
 })
 
 // 注意：这里的端口要和webpack里devServer的端口对应
-app.listen(7777)
+console.log('Project proxy is running at', '\x1b[34m', `${proxyConfig.domain}:${proxyConfig.port}`)
+app.listen(proxyConfig.port)
