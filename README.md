@@ -46,16 +46,19 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 1. 模拟数据
 `npm run mock`
 2. 页面开发
+`npm run watch`
+3. 一起启动
 `npm run dev`
 
 ### 测试
 1. 单元测试
 `npm run test:unit`
 2. e2e测试
-`npm run mock`
 `npm run dev`
 `npm run test:e2e`
-因为e2e其实就是正常访问网页，所以启动起来略繁琐
+
+### 代码大小分析
+`npm run analyze`
 
 ### 发布
 `npm run prod`
