@@ -43,17 +43,25 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 使用方法
 ---
 ### 开发
-1. 模拟数据
+#### 1.模拟数据
 `npm run mock`
-2. 页面开发
+
+#### 2.页面开发
 `npm run watch`
-3. 一起启动
+
+#### 3.一起启动
 `npm run dev`
 
+#### 4.文档本地预览
+components: `npm run build:components`
+
+componentsBase: `npm run build:componentsBase`
+
 ### 测试
-1. 单元测试
+#### 1.单元测试
 `npm run test:unit`
-2. e2e测试
+
+#### 2.e2e测试
 `npm run dev`
 `npm run test:e2e`
 

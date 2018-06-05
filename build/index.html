@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>components</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css" rel="stylesheet">
+  <style>
+    .container {
+      margin-top: 30px;
+    }
+    .nav li {cursor: pointer;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="menu">
+              <h3 style="margin-top: 4px">组件菜单</h3>
+              <ul class="nav nav-pills nav-stacked">
+                {{ menu }}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-xs-9">
+        <div class="panel panel-default">
+          <div class="panel-body markdown-body">
+            {{ content }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
