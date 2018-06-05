@@ -51,6 +51,8 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 
 #### 3.一起启动
 `npm run dev`
+启动以后，可以在运行时，管理已配置的接口根据我们想要的状态，对统一地址、统一参数的接口返回不同数据。
+管理接口地址：`{host:port}/mock-switch/`
 
 #### 4.文档本地预览
 components: `npm run build:components`
