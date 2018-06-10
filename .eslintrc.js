@@ -2,7 +2,8 @@
 module.exports = {
     "env": {
         "browser": true,
-        "node": true
+        "node": true,
+        "es6": true
     },
     // https://stackoverflow.com/questions/38296761/how-to-support-es7-in-eslint
     // 为了让eslint支持es7或更高的语法

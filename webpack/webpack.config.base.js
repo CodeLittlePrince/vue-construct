@@ -52,6 +52,53 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: isProduction
+            ? 'static/img/[name].[hash:8].[ext]'
+            : 'static/img/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: isProduction
+            ? 'static/font/[name].[hash:8].[ext]'
+            : 'static/font/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(css|scss)$/,
+        include: [resolve('src/common/scss')],
+        use: extractBaseCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
+      },
+      {
         test: /\.js$/,
         include: [resolve('src')],
         loader: [
@@ -90,53 +137,6 @@ const config = {
               ]
             })
           }
-        }
-      },
-      {
-        test: /\.(css|scss)$/,
-        include: [resolve('src/common/scss')],
-        use: extractBaseCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true
-              }
-            }
-          ]
-        })
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 8192,
-          name: isProduction
-            ? 'static/img/[name].[hash:8].[ext]'
-            : 'static/img/[name].[ext]'
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 8192,
-          name: isProduction
-            ? 'static/font/[name].[hash:8].[ext]'
-            : 'static/font/[name].[ext]'
         }
       }
     ]
