@@ -6,7 +6,7 @@ const proxyConfig = require('./proxy.config.js')
 
 const config = Object.assign(webpackConfigBase.config, {
   // sourcemap 模式
-  // devtool: 'cheap-module-eval-source-map', // 定位会有问题，还是用默认好了
+  devtool: 'eval-source-map', // 定位会有问题，还是用eval-source-map好了
   // 入口
   entry: {
     app: webpackConfigBase.resolve('src/index.js')
