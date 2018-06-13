@@ -114,7 +114,7 @@ const config = {
           extractCSS: true,
           loaders: {
             scss: extractAppCSS.extract({
-              fallback: 'vue-style-loader',
+              fallback: 'style-loader',
               use: [
                 {
                   loader: 'css-loader',
