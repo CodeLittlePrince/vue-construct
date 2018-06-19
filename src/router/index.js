@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// https://stackoverflow.com/questions/42603909/accessing-vuex-state-when-defining-vue-router-routes
 
 Vue.use(VueRouter)
 
