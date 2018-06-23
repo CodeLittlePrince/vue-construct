@@ -26,7 +26,7 @@ const config = Object.assign(webpackConfigBase.config, {
   output: {
     path: webpackConfigBase.resolve('dist'),
     // publicPath: 'https://cdn.self.com'
-    publicPath: webpackConfigBase.resolve('dist/'),
+    publicPath: './',
     filename: 'static/js/[name].[chunkhash:8].js'
   },
   plugins: [
