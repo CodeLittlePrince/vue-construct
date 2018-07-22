@@ -39,7 +39,10 @@ const config = {
     extensions: ['.js', '.vue', '.scss', '.css'],
     // 取路径别名，方便在业务代码中import
     alias: {
+      src: resolve('src/'),
       common: resolve('src/common/'),
+      ajax: resolve('src/common/js/ajax/'),
+      utils: resolve('src/common/js/utils/'),
       views: resolve('src/views/'),
       components: resolve('src/components/'),
       componentsBase: resolve('src/componentsBase/'),
@@ -53,9 +56,8 @@ const config = {
     rules: [
       {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
-          limit: 8192,
           name: isProduction
             ? 'static/img/[name].[hash:8].[ext]'
             : 'static/img/[name].[ext]'

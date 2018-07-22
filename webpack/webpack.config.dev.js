@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const proxyConfig = require('./proxy.config.js')
+const os = require('os')
 
 const config = Object.assign(webpackConfigBase.config, {
   // sourcemap 模式
@@ -40,7 +41,7 @@ const config = Object.assign(webpackConfigBase.config, {
         secure: false
       }
     },
-    host: '0.0.0.0',
+    host: getIP(),
     disableHostCheck: true, // 为了手机可以访问
     contentBase: webpackConfigBase.resolve('dev'), // 本地服务器所加载的页面所在的目录
     // historyApiFallback: true, // 为了SPA应用服务
@@ -48,5 +49,22 @@ const config = Object.assign(webpackConfigBase.config, {
     hot: true  // 使用热加载插件 HotModuleReplacementPlugin
   }
 })
+
+/**
+ * 获取本机ip
+ */
+function getIP() {
+  const interfaces = os.networkInterfaces()
+  let addresses = []
+  for (let k in interfaces) {
+    for (let k2 in interfaces[k]) {
+      let address = interfaces[k][k2]
+      if (address.family === 'IPv4' && !address.internal) {
+        addresses.push(address.address)
+      }
+    }
+  }
+  return addresses[0]
+}
 
 module.exports = config
