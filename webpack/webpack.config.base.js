@@ -75,7 +75,10 @@ const config = {
       },
       {
         test: /\.(css|scss)$/,
-        include: [resolve('src/common/scss')],
+        include: [
+          resolve('src/common/scss'),
+          resolve('node_modules')
+        ],
         use: extractBaseCSS.extract({
           fallback: 'style-loader',
           use: [
