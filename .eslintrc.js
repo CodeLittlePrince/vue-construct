@@ -23,10 +23,7 @@ module.exports = {
             "error",
             2
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "linebreak-style": 0,
         "quotes": [
             "error",
             "single"
@@ -34,6 +31,10 @@ module.exports = {
         "semi": [
             "error",
             "never"
+        ],
+        "no-trailing-spaces": [
+            "error",
+            { "skipBlankLines": true }
         ],
         // https://eslint.org/docs/user-guide/configuring#using-configuration-files
         // "off" or 0 - turn the rule off
