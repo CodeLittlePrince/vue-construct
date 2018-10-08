@@ -13,8 +13,8 @@ const extractBaseCSS =
       disable: !isProduction // 开发环境下不抽离css
     }
   )
-const extractAppCSS =
-  new ExtractTextPlugin(
+const extractAppCSS
+  = new ExtractTextPlugin(
     {
       filename:'static/css/app.[contenthash:8].css',
       allChunks: true,
@@ -30,6 +30,9 @@ function resolve(dir) {
 // 网站图标配置
 const favicon = resolve('favicon.ico')
 
+// 指定以__base64为后缀的svg转为base64
+const svgBase64Reg = /__base64\.(svg)(\?.*)?$/
+
 // __dirname: 总是返回被执行的 js 所在文件夹的绝对路径
 // __filename: 总是返回被执行的 js 的绝对路径
 // process.cwd(): 总是返回运行 node 命令时所在的文件夹的绝对路径
@@ -41,26 +44,38 @@ const config = {
     alias: {
       src: resolve('src/'),
       common: resolve('src/common/'),
-      ajax: resolve('src/common/js/ajax/'),
       utils: resolve('src/common/js/utils/'),
       views: resolve('src/views/'),
       components: resolve('src/components/'),
       componentsBase: resolve('src/componentsBase/'),
       directives: resolve('src/directives/'),
       filters: resolve('src/filters/'),
-      mixins: resolve('src/mixins/')
+      mixins: resolve('src/mixins/'),
+      plugins: resolve('src/plugins/')
     }
   },
   // loaders处理
   module: {
     rules: [
       {
+        test: /\.(svg)(\?.*)?$/,
+        include: svgBase64Reg,
+        loader: 'url-loader',
+        options: {
+          limit: 99999,
+          name: isProduction
+            ? 'static/font/[name].[hash:8].[ext]'
+            : 'static/font/[name].[ext]'
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        exclude: svgBase64Reg,
         loader: 'file-loader',
         options: {
           name: isProduction
             ? 'static/img/[name].[hash:8].[ext]'
-            : 'static/img/[name].[ext]'
+            : 'static/img/[path][name].[ext]'
         }
       },
       {
@@ -75,7 +90,10 @@ const config = {
       },
       {
         test: /\.(css|scss)$/,
-        include: [resolve('src/common/scss')],
+        include: [
+          resolve('src/common/scss'),
+          resolve('node_modules')
+        ],
         use: extractBaseCSS.extract({
           fallback: 'style-loader',
           use: [
@@ -116,7 +134,7 @@ const config = {
           extractCSS: true,
           loaders: {
             scss: extractAppCSS.extract({
-              fallback: 'style-loader',
+              fallback: 'vue-style-loader',
               use: [
                 {
                   loader: 'css-loader',

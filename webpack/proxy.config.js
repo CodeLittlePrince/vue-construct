@@ -15,7 +15,10 @@ function getIP() {
   return addresses[0]
 }
 
+const ip = getIP(0) || 'localhost'
+
 module.exports = {
-  domain: `http://${getIP()}`,
+  ip: ip,
+  domain: `http://${ip}`,
   port: '7777'
 }

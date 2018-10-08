@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
 const pkg = require('../package.json')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ANALYZE = process.env.ANALYZE
 
 // 网站版本号设置
@@ -39,9 +40,16 @@ const config = Object.assign(webpackConfigBase.config, {
         root: webpackConfigBase.resolve('')
       }
     ),
+    new CopyWebpackPlugin([
+      // 复制favicon到dist
+      {
+        from: webpackConfigBase.favicon,
+        to: webpackConfigBase.resolve('dev')
+      }
+    ]),
     // 抽离出css
-    webpackConfigBase.extractAppCSS,
     webpackConfigBase.extractBaseCSS,
+    webpackConfigBase.extractAppCSS,
     // 提取vendor,和公共commons
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'commons']
@@ -49,7 +57,6 @@ const config = Object.assign(webpackConfigBase.config, {
     // html 模板插件
     new HtmlWebpackPlugin({
       appVersion,
-      favicon: webpackConfigBase.favicon,
       filename: 'index.html',
       template: webpackConfigBase.resolve('src/index.html'),
       minify: {

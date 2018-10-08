@@ -4,6 +4,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const proxyConfig = require('./proxy.config.js')
 const os = require('os')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const config = Object.assign(webpackConfigBase.config, {
   // sourcemap 模式
@@ -20,13 +21,19 @@ const config = Object.assign(webpackConfigBase.config, {
   plugins: [
     // html 模板插件
     new HtmlWebpackPlugin({
-      favicon: webpackConfigBase.favicon,
       filename: 'index.html',
       template: webpackConfigBase.resolve('src/index.html')
     }),
+    new CopyWebpackPlugin([
+      // 复制favicon到dist
+      {
+        from: webpackConfigBase.favicon,
+        to: webpackConfigBase.resolve('dev')
+      }
+    ]),
     // 抽离出css，开发环境其实不抽离，但是为了配合extract-text-webpack-plugin插件，需要做个样子
-    webpackConfigBase.extractAppCSS,
     webpackConfigBase.extractBaseCSS,
+    webpackConfigBase.extractAppCSS,
     // 热替换插件
     new webpack.HotModuleReplacementPlugin(),
     // 更友好地输出错误信息
@@ -38,7 +45,8 @@ const config = Object.assign(webpackConfigBase.config, {
       // koa 代码在 ./mock 目录中，启动命令为 npm run mock。
       '/': {
         target: `${proxyConfig.domain}:${proxyConfig.port}`, // 如果说联调了，将地址换成后端环境的地址就哦了
-        secure: false
+        secure: false,
+        changeOrigin: true
       }
     },
     host: getIP(),
