@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="content jello" >
+    <div class="content jello">
       <h1 v-directive-sample:arg="'msg'">
         {{ `Vue` | filterSample('前端架构') }}
         <span>- by 咻</span>
