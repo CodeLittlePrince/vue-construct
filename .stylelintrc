@@ -2,7 +2,8 @@
   "processors": ["stylelint-processor-html"],
   "extends": "stylelint-config-standard",
   "ignoreFiles": [
-    "**/*.js"
+    "**/*.js",
+    "**/*.md"
   ],
   "rules": {
     "at-rule-no-unknown": [
