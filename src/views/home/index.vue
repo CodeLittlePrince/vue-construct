@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <div class="content jello">
+    <div class="content jello" >
       <h1 v-directive-sample:arg="'msg'">
         {{ `Vue` | filterSample('前端架构') }}
         <span>- by 咻</span>
       </h1>
-      <a href="https://github.com/CodeLittlePrince/blog" target="__blank">
+      <a
+        href="https://github.com/CodeLittlePrince/blog"
+        target="__blank">
         <div class="cover"></div>
       </a>
     </div>
@@ -13,48 +15,48 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import mixinsSample from 'mixins/sample'
-  import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
+import mixinsSample from 'mixins/sample'
+import { mapGetters, mapActions } from 'vuex'
 
-  export default {
-    mixins: [mixinsSample],
-    computed: {
-      ...mapGetters([
-        'name'
-      ])
-    },
-    mounted() {
-      // ajax get data
-      axios.get('/home/hello', { params: { page: 7 } })
+export default {
+  mixins: [mixinsSample],
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
+  mounted() {
+    // ajax get data
+    axios.get('/home/hello', { params: { page: 7 } })
       // axios.post('/home/hello', { page: 7 }) // FOR POST
-        .then(res => {
-          const data = res.data
-          console.log(`%c${data.msg}`, 'color: blue')
-        })
-        .catch(e => {
-          console.error(e)
-        })
+      .then(res => {
+        const data = res.data
+        console.log(`%c${data.msg}`, 'color: blue')
+      })
+      .catch(e => {
+        console.error(e)
+      })
       // ajax get data
-      axios.get('/home/kitty')
-        .then(res => {
-          const data = res.data
-          console.log(`%c${data.msg}`, 'color: blue')
-        })
-        .catch(e => {
-          console.error(e)
-        })
+    axios.get('/home/kitty')
+      .then(res => {
+        const data = res.data
+        console.log(`%c${data.msg}`, 'color: blue')
+      })
+      .catch(e => {
+        console.error(e)
+      })
       // vuex action
-      this.ageIncrease()
-      // vuex getter
-      console.log(`%cvuex getter ${this.name}`, 'color: pink')
-    },
-    methods: {
-      ...mapActions([
-        'ageIncrease'
-      ])
-    }
+    this.ageIncrease()
+    // vuex getter
+    console.log(`%cvuex getter ${this.name}`, 'color: pink')
+  },
+  methods: {
+    ...mapActions([
+      'ageIncrease'
+    ])
   }
+}
 </script>
 
 <style lang="scss">

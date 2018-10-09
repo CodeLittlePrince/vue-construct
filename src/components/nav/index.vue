@@ -10,7 +10,9 @@
       <router-link to="/pageB">页面B</router-link>
     </li>
     <li class="rubberBand">
-      <a href="/mock-switch/" target="_blank">mock-switch</a>
+      <a
+        href="/mock-switch/"
+        target="_blank">mock-switch</a>
     </li>
   </ul>
 </template>

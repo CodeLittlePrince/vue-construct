@@ -7,15 +7,20 @@ module.exports = {
     },
     // https://stackoverflow.com/questions/38296761/how-to-support-es7-in-eslint
     // 为了让eslint支持es7或更高的语法
-    "parser": 'babel-eslint',
-    "extends": "eslint:recommended",
+    // "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+    ],
     "parserOptions": {
+        "parser": "babel-eslint",
         "sourceType": "module"
     },
     "plugins": [
         // https://github.com/BenoitZugmeyer/eslint-plugin-html
         // 支持 *.vue lint
-        "html"
+        // "html"
+        "vue"
     ],
     // https://eslint.org/docs/rules/
     "rules": {
@@ -40,7 +45,9 @@ module.exports = {
         // "off" or 0 - turn the rule off
         // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
         // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
-        'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-        'no-console': 0,
+        "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
+        "no-console": 0,
+        // vue rules
+        "vue/html-self-closing": 0
     }
 };
