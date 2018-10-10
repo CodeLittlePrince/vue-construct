@@ -19,5 +19,10 @@
     "transform-object-rest-spread",
     "syntax-dynamic-import",
     ["transform-class-properties", { "spec": true }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [ "istanbul" ]
+    }
+  }
 }
