@@ -16,6 +16,9 @@ describe('utils/dom', () => {
     expect(dom.hasClass(ele, 'kitty')).to.be.equal(true)
     // 是否含有tom
     expect(dom.hasClass(ele, 'tom')).to.be.equal(false)
+    // 空格情况
+    // https://github.com/chaijs/chai/issues/864
+    expect(() => dom.hasClass(ele, 'x y')).to.throw()
     // 无参数
     expect(dom.hasClass()).to.be.equal(false)
   })
@@ -29,6 +32,15 @@ describe('utils/dom', () => {
     // 再增加类名kitty，希望并不会有重复类名
     dom.addClass(ele, 'kitty')
     expect(ele.className).to.be.equal('base kitty')
+    // dom元素传空
+    dom.addClass(null, 'kitty')
+    expect(ele.className).to.be.equal('base kitty')
+    // class传空
+    dom.addClass(ele, null)
+    expect(ele.className).to.be.equal('base kitty')
+    // 加空两格的类名
+    dom.addClass(ele, 'kitty  kitty')
+    expect(ele.className).to.be.equal('base kitty')
   })
   // 测试removeClass
   it('removeClass', () => {
@@ -39,6 +51,15 @@ describe('utils/dom', () => {
     expect(ele.className).to.be.equal('base')
     // 删除不存在的类名
     dom.removeClass(ele, 'tom')
+    expect(ele.className).to.be.equal('base')
+    // 删除空的dom元素
+    dom.removeClass(null, '')
+    expect(ele.className).to.be.equal('base')
+    // 删除空的类名
+    dom.removeClass(ele, '')
+    expect(ele.className).to.be.equal('base')
+    // 删除空两格的类名
+    dom.removeClass(ele, 'kitty  kitty')
     expect(ele.className).to.be.equal('base')
   })
   // 测试noce
