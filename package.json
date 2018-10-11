@@ -6,7 +6,7 @@
   "scripts": {
     "mock": "nodemon ./server/index.js",
     "watch": "webpack-dev-server --progress --colors --open --config webpack/webpack.config.dev.js",
-    "dev": "concurrently 'npm run mock' 'npm run watch'",
+    "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
     "analyze": "cross-env NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack/webpack.config.prod.js",
     "prod": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.config.prod.js",
     "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
