@@ -3,7 +3,7 @@ const ip = util.getIP(0) || 'localhost'
 
 function serve() {
   return new Promise((resolve, reject) => {
-    util.getAvailablePort().then(availablePort => {
+    util.getAvailablePort([7777, 7778, 7779]).then(availablePort => {
       const proxyURL = `http://${ip}:${availablePort}`
       const send = require('koa-send')
       const Koa = require('koa')
@@ -94,7 +94,7 @@ function serve() {
         
         
       // 注意：这里的端口要和webpack里devServer的端口对应
-      console.log('Project proxy is running at', `\x1b[34m\x1b[1m${proxyURL}`)
+      console.log('project mock server is running at', `\x1b[34m\x1b[1m${proxyURL}`)
       app.listen(availablePort, () => {
         resolve(availablePort)
       })

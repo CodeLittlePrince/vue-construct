@@ -21,8 +21,10 @@ function getIP() {
 /**
  * 获取本机空闲的端口号
  */
-async function getAvailablePort() {
-  return await getPort()
+async function getAvailablePort(ports) {
+  return await getPort({
+    port: ports
+  })
 }
 
 module.exports = {

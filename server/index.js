@@ -7,7 +7,7 @@ const ip = util.getIP(0) || 'localhost'
 const mockServer = require('./mockServer')
 
 mockServer.serve().then(mockServerPort => {
-  util.getAvailablePort().then(availablePort => {
+  util.getAvailablePort([8080, 8081, 8082]).then(availablePort => {
     const proxyURL = `http://${ip}:${mockServerPort}`
     const options = {
       proxy: {
@@ -25,15 +25,17 @@ mockServer.serve().then(mockServerPort => {
       host: ip,
       disableHostCheck: true, // 为了手机可以访问
       contentBase: webpackConfigBase.resolve('dev'), // 本地服务器所加载的页面所在的目录
-      // historyApiFallback: true, // 为了SPA应用服务
+      historyApiFallback: {
+        index: '/'
+      }, // 为了SPA应用服务
       inline: true, //实时刷新
       hot: true  // 使用热加载插件 HotModuleReplacementPlugin
     }
     webpackDevServer.addDevServerEntrypoints(config, options)
     const compiler = webpack(config)
     const server = new webpackDevServer(compiler, options)
-    server.listen(availablePort, () => {
-      console.log('Project is running at', `\x1b[34m\x1b[1m${ip}:${availablePort}`)
+    server.listen(availablePort, ip, () => {
+      console.log('project is running at', `http://${ip}:${availablePort}`)
     })
   })
 })

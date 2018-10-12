@@ -9,7 +9,7 @@ const PageA = () => import('../views/pageA')
 const PageB = () => import('../views/pageB')
 
 export default new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   routes: [
     {
       path: '/',
