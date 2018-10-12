@@ -1,86 +1,39 @@
-const send = require('koa-send')
-const proxyConfig = require('../webpack/proxy.config')
-const Koa = require('koa')
-// 使用router
-const Router = require('koa-router')
-const Boom = require('boom')
-const bodyParser = require('koa-bodyparser')
-const app = new Koa()
-const router = new Router()
-// https://github.com/alexmingoia/koa-router
-app.use(router.routes())
-app.use(router.allowedMethods({
-  throw: true,
-  notImplemented: () => new Boom.notImplemented(),
-  methodNotAllowed: () => new Boom.methodNotAllowed()
-}))
-// 使用bodyparser 解析get,post的参数
-app.use(bodyParser())
+const webpackDevServer = require('webpack-dev-server')
+const webpack = require('webpack')
+const webpackConfigBase = require('../webpack/webpack.config.base.js')
+const config = require('../webpack/webpack.config.dev.js')
+const util = require('./util.js')
+const ip = util.getIP(0) || 'localhost'
+const mockServer = require('./mockServer')
 
-let $config = {} // 设置一个cache，让/mock-switch设置过的数据能够直接给页面
-// 使用mockSwitch
-app.use(async (ctx, next) => {
-  if (ctx.path.startsWith('/mock-switch/list')) {
-    // '/mock-switch/list'是为了让接口管理页面'/mock-switch/'通过配置文件展现数据
-    const mockSwitchMap = require('./mockSwitchMap')
-    ctx.body = mockSwitchMap
-  } else if (ctx.path.startsWith('/mock-switch/')) {
-    // '/mock-switch/'是接口管理页面
-    var fileName = ctx.path.substr('/mock-switch/'.length)
-    await send(
-      ctx,
-      './mockSwitch/' + (fileName || 'index.html'),
-      { root: __dirname + '/' }
-    )
-  } else if (ctx.path.startsWith('/mock-switch')) {
-    // '/mock-switch'是接口管理页面切换接口时候post的地址
-    const path = ctx.request.body.key
-    const status = ctx.request.body.value
-    const params = ctx.request.body
-    const mockHandle = require(`${mockRoot}${ctx.request.body.key}.js`)
-    $config[path] = mockHandle(params, status)
-    ctx.body = $config[path]
-  }
-  await next()
-})
-
-// 模拟数据返回
-const mockRoot = '../mock'
-app.use(async (ctx, next) => {
-  if (!ctx.path.startsWith('/mock-switch')) {
-  // 计时
-    const start = new Date()
-    // 模拟
-    let path = ctx.path
-    let params = {}
-    const method = ctx.method
-    // console.log(ctx.query.id)         // get获取参数
-    // console.log(ctx.request.body.id)  // post获取参数
-    params = method.toLowerCase() === 'get' ?
-      ctx.query :
-      ctx.request.body
-    // 调用对应的模拟数据
-
-    const mockHandle = require(`${mockRoot}${path}.js`)
-    // 返回数据
-    // 如果mock-switch设置过，则从cache中（即$config）获取即可
-    if ($config.hasOwnProperty(path)) {
-      ctx.body = $config[path]
-    } else {
-      ctx.body = mockHandle(params)
+mockServer.serve().then(mockServerPort => {
+  util.getAvailablePort().then(availablePort => {
+    const proxyURL = `http://${ip}:${mockServerPort}`
+    const options = {
+      proxy: {
+        // 凡是 `/api` 开头的 http 请求，都会被代理到 target 上，由 koa 提供 mock 数据。
+        // koa 代码在 ./mock 目录中，启动命令为 npm run mock。
+        '/': {
+          target: proxyURL, // 如果说联调了，将地址换成后端环境的地址就哦了
+          secure: false,
+          changeOrigin: true
+        }
+      },
+      quiet: true,
+      open: true,
+      openPage: '',
+      host: ip,
+      disableHostCheck: true, // 为了手机可以访问
+      contentBase: webpackConfigBase.resolve('dev'), // 本地服务器所加载的页面所在的目录
+      // historyApiFallback: true, // 为了SPA应用服务
+      inline: true, //实时刷新
+      hot: true  // 使用热加载插件 HotModuleReplacementPlugin
     }
-    await next()
-    // 打印时间
-    const ms = new Date() - start
-    console.log(`${ctx.method} ${ctx.url} - \x1b[32m${ms}ms`)
-  }
+    webpackDevServer.addDevServerEntrypoints(config, options)
+    const compiler = webpack(config)
+    const server = new webpackDevServer(compiler, options)
+    server.listen(availablePort, () => {
+      console.log('Project is running at', `\x1b[34m\x1b[1m${ip}:${availablePort}`)
+    })
+  })
 })
-
-// log error
-app.on('error', (err, ctx) => {
-  console.log('server error', err, ctx)
-})
-
-// 注意：这里的端口要和webpack里devServer的端口对应
-console.log('Project proxy is running at', `\x1b[34m\x1b[1m${proxyConfig.domain}:${proxyConfig.port}`)
-app.listen(proxyConfig.port)
