@@ -13,7 +13,7 @@
     "test:e2e": "mocha ./test/e2e/index.js",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .vue,.js src/**",
-    "lint:css": "stylelint 'src/**/*.vue' --syntax scss",
+    "lint:css": "stylelint 'src/**/*.(vue|scss)' --syntax scss",
     "build:components": "node ./build/build.doc.components.js",
     "build:componentsBase": "node ./build/build.doc.componentsBase.js"
   },
