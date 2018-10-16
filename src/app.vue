@@ -10,7 +10,7 @@ import cNav from 'components/nav'
 
 export default {
   components: {
-    cNav
+    'c-nav': cNav
   }
 }
 </script>

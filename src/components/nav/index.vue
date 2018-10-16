@@ -12,7 +12,8 @@
     <li class="rubberBand">
       <a
         href="/mock-switch/"
-        target="_blank">mock-switch</a>
+        target="_blank"
+      >mock-switch</a>
     </li>
   </ul>
 </template>

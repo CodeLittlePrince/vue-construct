@@ -9,8 +9,8 @@ Vue前端架构
 ----------------------- | ------
 vue v2.5                | data binding
 vue-router v3           | vue路由
-webpack v3              | 本地发开、打包发布（webpack v4虽然已经发布，不过还是beta版，技术选型要稳）
-webpack-dev-server v2   | 本地启服务
+webpack v4              | 本地发开、打包发布
+webpack-dev-server v3   | 本地启mock服务
 webpack-bundle-analyzer | 打包后文件分析
 koa v2                  | 本地模拟数据接口
 axios                   | 处理get/post
@@ -22,15 +22,15 @@ nodemon                 | 修改node代码不需要重启监听，一直运行�
 ### 开发
 1. koa模拟数据接口，从而使前后端分离。
 2. sourcemap，很好定位。
-3. eslint，高大上的代码规则。
-4. 热更新。
+3. eslint，stylelint高大上的代码规则。
+4. 热替换。
 5. nodemon让改node代码变得更加顺滑。
 6. 使用mockjs模拟接口返回数据。
 7. scss支持识别2倍3倍图加载（除了接口获取的图，所有图都用背景图方案）
 8. git hooks，防止不符合规范的提交
 
 ### 测试
-1. 单元测试
+1. 单元测试（含代码覆盖率）
 2. e2e测试
 
 ### 发布
