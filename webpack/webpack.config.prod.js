@@ -17,6 +17,7 @@ try {
 }
 
 const config = Object.assign(webpackConfigBase.config, {
+  mode: 'production',
   // You should configure your server to disallow access to the Source Map file for normal users!
   devtool: 'source-map',
   entry: {
@@ -72,6 +73,8 @@ const config = Object.assign(webpackConfigBase.config, {
     }),
     // 加署名
     new webpack.BannerPlugin('Copyright by 子咻 https://github.com/CodeLittlePrince/blog'),
+    // make sure to include the plugin for the magic
+    webpackConfigBase.VueLoaderPluginInstance
   ]
 })
 

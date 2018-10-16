@@ -5,10 +5,12 @@ const path = require('path')
 // app作为迭代的css，会经常改变
 const isProduction = process.env.NODE_ENV === 'production'
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPluginInstance = new VueLoaderPlugin()
 const extractBaseCSS =
   new ExtractTextPlugin(
     {
-      filename:'static/css/base.[contenthash:8].css',
+      filename:'static/css/base.[md5:contenthash:hex:8].css',
       allChunks: true,
       disable: !isProduction // 开发环境下不抽离css
     }
@@ -16,7 +18,7 @@ const extractBaseCSS =
 const extractAppCSS
   = new ExtractTextPlugin(
     {
-      filename:'static/css/app.[contenthash:8].css',
+      filename:'static/css/app.[md5:contenthash:hex:8].css',
       allChunks: true,
       disable: !isProduction // 开发环境下不抽离css
     }
@@ -168,5 +170,6 @@ module.exports = {
   favicon,
   resolve,
   extractBaseCSS,
-  extractAppCSS
+  extractAppCSS,
+  VueLoaderPluginInstance
 }

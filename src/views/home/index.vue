@@ -7,7 +7,8 @@
       </h1>
       <a
         href="https://github.com/CodeLittlePrince/blog"
-        target="__blank">
+        target="__blank"
+      >
         <div class="cover"></div>
       </a>
     </div>
