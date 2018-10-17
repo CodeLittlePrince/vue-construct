@@ -24,10 +24,10 @@ const config = Object.assign(webpackConfigBase.config, {
   devtool: 'source-map',
   entry: {
     app: [
-      // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
-      ...vendors,
       webpackConfigBase.resolve('src/index.js')
     ],
+    // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
+    vendors: vendors
   },
   output: {
     path: webpackConfigBase.resolve('dist'),
@@ -37,12 +37,20 @@ const config = Object.assign(webpackConfigBase.config, {
   },
   optimization: {
     splitChunks: {
+      maxAsyncRequests: 10,
+      minSize: 3,
       cacheGroups: {
-        vendor: {
-          test: m => vendors.indexOf(m.rawRequest) > -1,
-          name: 'vendor',
+        vendors: {
+          test: 'vendors',
           chunks: 'all',
-          enforce: true
+          priority: 1
+        },
+        commons: {
+          minChunks: 2,
+          minSize: 0,
+          reuseExistingChunk: true,
+          chunks: 'initial',
+          priority: -20
         }
       }
     }
