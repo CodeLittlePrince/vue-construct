@@ -66,8 +66,8 @@ const config = Object.assign(webpackConfigBase.config, {
       }
     ]),
     // 抽离出css
-    webpackConfigBase.extractBaseCSS,
-    webpackConfigBase.extractAppCSS,
+    // webpackConfigBase.extractBaseCSS,
+    webpackConfigBase.extractCSS,
     // html 模板插件
     new HtmlWebpackPlugin({
       appVersion,
