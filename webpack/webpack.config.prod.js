@@ -27,6 +27,14 @@ const config = Object.assign(webpackConfigBase.config, {
       webpackConfigBase.resolve('src/index.js')
     ],
     // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
+    /*
+      webpack v4默认其实在spitChunks已经有这个功能了，
+      但是因为babel-polyfill的动态加入，
+      直接将babel-polyfill加入vendor，
+      万一以后用到高级语法需要polyfill支持，
+      那样会影响整个vendor，
+      因此，单独抽离（spitChunks自动会做）
+     */
     vendors: vendors
   },
   output: {
@@ -37,22 +45,7 @@ const config = Object.assign(webpackConfigBase.config, {
   },
   optimization: {
     splitChunks: {
-      maxAsyncRequests: 10,
-      minSize: 3,
-      cacheGroups: {
-        vendors: {
-          test: 'vendors',
-          chunks: 'all',
-          priority: 1
-        },
-        commons: {
-          test: 'app',
-          minChunks: 2,
-          minSize: 0,
-          chunks: 'all',
-          priority: -20
-        }
-      }
+      chunks: 'all'
     }
   },
   plugins: [
@@ -69,7 +62,7 @@ const config = Object.assign(webpackConfigBase.config, {
       // 复制favicon到dist
       {
         from: webpackConfigBase.favicon,
-        to: webpackConfigBase.resolve('dev')
+        to: webpackConfigBase.resolve('dist/')
       }
     ]),
     // 抽离出css
