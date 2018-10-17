@@ -23,9 +23,7 @@ const config = Object.assign(webpackConfigBase.config, {
   // You should configure your server to disallow access to the Source Map file for normal users!
   // devtool: 'source-map',
   entry: {
-    app: [
-      webpackConfigBase.resolve('src/index.js')
-    ],
+    app: webpackConfigBase.resolve('src/index.js'),
     // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
     /*
       webpack v4默认其实在spitChunks已经有这个功能了，
@@ -45,7 +43,17 @@ const config = Object.assign(webpackConfigBase.config, {
   },
   optimization: {
     splitChunks: {
-      chunks: 'all'
+      chunks: 'all',
+      cacheGroups: {
+        // 合并css为两个
+        styles: {
+          name: 'styles',
+          test: /\.(css|vue)$/,
+          // test: /\.(s?css|vue)$/, // 这样会将所有css合为一个
+          chunks: 'all',
+          enforce: true
+        }
+      }
     }
   },
   plugins: [
@@ -66,7 +74,6 @@ const config = Object.assign(webpackConfigBase.config, {
       }
     ]),
     // 抽离出css
-    // webpackConfigBase.extractBaseCSS,
     webpackConfigBase.extractCSS,
     // html 模板插件
     new HtmlWebpackPlugin({
