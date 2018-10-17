@@ -97,7 +97,38 @@ const config = {
           resolve('node_modules')
         ],
         use: extractBaseCSS.extract({
-          fallback: 'style-loader',
+          fallback: 'vue-style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
+      },
+      // 处理 single-file vue 的样式
+      // https://vue-loader.vuejs.org/zh/migrating.html#%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E4%B8%8D%E5%85%BC%E5%AE%B9%E5%8F%98%E6%9B%B4
+      {
+        test: /\.(css|scss)$/,
+        exclude: [
+          resolve('src/common/scss'),
+        ],
+        use: extractAppCSS.extract({
+          fallback: 'vue-style-loader',
           use: [
             {
               loader: 'css-loader',
@@ -131,35 +162,7 @@ const config = {
       {
         test: /\.vue$/,
         exclude: /node_modules/,
-        loader: 'vue-loader',
-        options: {
-          extractCSS: true,
-          loaders: {
-            scss: extractAppCSS.extract({
-              fallback: 'vue-style-loader',
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: 'sass-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                }
-              ]
-            })
-          }
-        }
+        loader: 'vue-loader'
       }
     ]
   }

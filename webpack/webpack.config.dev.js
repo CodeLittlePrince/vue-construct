@@ -34,7 +34,7 @@ const config = Object.assign(webpackConfigBase.config, {
     ]),
     // 抽离出css，开发环境其实不抽离，但是为了配合extract-text-webpack-plugin插件，需要做个样子
     webpackConfigBase.extractBaseCSS,
-    // webpackConfigBase.extractAppCSS,
+    webpackConfigBase.extractAppCSS,
     // 热替换插件
     new webpack.HotModuleReplacementPlugin(),
     // 更友好地输出错误信息

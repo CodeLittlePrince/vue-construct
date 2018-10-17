@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "mock": "nodemon ./server/index.js",
-    "watch": "webpack-dev-server --progress --colors --config webpack/webpack.config.dev.js",
+    "watch": "webpack-dev-server --progress --colors --open --config webpack/webpack.config.dev.js",
     "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
     "analyze": "cross-env NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack/webpack.config.prod.js",
     "prod": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.config.prod.js",
@@ -93,7 +93,7 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

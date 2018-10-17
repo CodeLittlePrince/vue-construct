@@ -16,20 +16,36 @@ try {
   console.warn('Getting revision FAILED. Maybe this is not a git project.')
 }
 
+const vendors =  Object.keys(pkg.dependencies)
+
 const config = Object.assign(webpackConfigBase.config, {
   mode: 'production',
   // You should configure your server to disallow access to the Source Map file for normal users!
   devtool: 'source-map',
   entry: {
-    app: webpackConfigBase.resolve('src/index.js'),
-    // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
-    vendor: Object.keys(pkg.dependencies)
+    app: [
+      // 将第三方依赖（node_modules）的库打包，从而充分利用浏览器缓存
+      ...vendors,
+      webpackConfigBase.resolve('src/index.js')
+    ],
   },
   output: {
     path: webpackConfigBase.resolve('dist'),
     // publicPath: 'https://cdn.self.com'
     publicPath: './',
     filename: 'static/js/[name].[chunkhash:8].js'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: m => vendors.indexOf(m.rawRequest) > -1,
+          name: 'vendor',
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
   },
   plugins: [
     // Scope hosting
@@ -51,10 +67,6 @@ const config = Object.assign(webpackConfigBase.config, {
     // 抽离出css
     webpackConfigBase.extractBaseCSS,
     webpackConfigBase.extractAppCSS,
-    // 提取vendor,和公共commons
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'commons']
-    }),
     // html 模板插件
     new HtmlWebpackPlugin({
       appVersion,

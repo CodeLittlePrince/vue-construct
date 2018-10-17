@@ -9,6 +9,50 @@
     </div>
   </div>
 </template>
+<script>
+import axios from 'axios'
+import mixinsSample from 'mixins/sample'
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+  mixins: [mixinsSample],
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
+  mounted() {
+    // ajax get data
+    axios.get('/home/hello', { params: { page: 7 } })
+      // axios.post('/home/hello', { page: 7 }) // FOR POST
+      .then(res => {
+        const data = res.data
+        console.log(`%c${data.msg}`, 'color: blue')
+      })
+      .catch(e => {
+        console.error(e)
+      })
+      // ajax get data
+    axios.get('/home/kitty')
+      .then(res => {
+        const data = res.data
+        console.log(`%c${data.msg}`, 'color: blue')
+      })
+      .catch(e => {
+        console.error(e)
+      })
+      // vuex action
+    this.ageIncrease()
+    // vuex getter
+    console.log(`%cvuex getter ${this.name}`, 'color: pink')
+  },
+  methods: {
+    ...mapActions([
+      'ageIncrease'
+    ])
+  }
+}
+</script>
 
 <style lang="scss">
 @import '~common/scss/variable';
