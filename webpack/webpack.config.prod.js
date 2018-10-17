@@ -21,7 +21,7 @@ const vendors =  Object.keys(pkg.dependencies)
 const config = Object.assign(webpackConfigBase.config, {
   mode: 'production',
   // You should configure your server to disallow access to the Source Map file for normal users!
-  devtool: 'source-map',
+  // devtool: 'source-map',
   entry: {
     app: [
       webpackConfigBase.resolve('src/index.js')
@@ -46,10 +46,10 @@ const config = Object.assign(webpackConfigBase.config, {
           priority: 1
         },
         commons: {
+          test: 'app',
           minChunks: 2,
           minSize: 0,
-          reuseExistingChunk: true,
-          chunks: 'initial',
+          chunks: 'all',
           priority: -20
         }
       }
