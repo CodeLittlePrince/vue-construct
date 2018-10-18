@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const config = Object.assign(webpackConfigBase.config, {
   mode: 'development',
+  devtool: 'eval-source-map', // 定位会有问题，还是用eval-source-map好了
   // 入口
   entry: {
     app: webpackConfigBase.resolve('src/index.js')
@@ -15,7 +16,7 @@ const config = Object.assign(webpackConfigBase.config, {
   // 输出
   output: {
     path: webpackConfigBase.resolve('dev'),
-    filename: 'index.bundle.js'
+    filename: '[name].js'
   },
   plugins: [
     // html 模板插件

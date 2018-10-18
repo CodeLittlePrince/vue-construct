@@ -56,6 +56,7 @@ const config = {
   },
   // loaders处理
   module: {
+    noParse: /^(vue|vue-router|vuex)$/,
     rules: [
       {
         test: /\.(svg)(\?.*)?$/,
@@ -79,7 +80,7 @@ const config = {
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'url-loader',
         options: {
           limit: 8192,
@@ -126,7 +127,10 @@ const config = {
       {
         test: /\.vue$/,
         exclude: /node_modules/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          cacheBusting: true
+        }
       }
     ]
   }
