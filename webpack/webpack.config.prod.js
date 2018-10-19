@@ -6,6 +6,7 @@ const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
 const pkg = require('../package.json')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ANALYZE = process.env.ANALYZE
 
 // 网站版本号设置
@@ -42,6 +43,7 @@ const config = Object.assign(webpackConfigBase.config, {
     filename: 'static/js/[name].[chunkhash:8].js'
   },
   optimization: {
+    // 分割文件
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -54,7 +56,12 @@ const config = Object.assign(webpackConfigBase.config, {
           enforce: true
         }
       }
-    }
+    },
+    // 压缩js
+    minimizer: [new UglifyJsPlugin({
+      cache: true,
+      parallel: true
+    })]
   },
   plugins: [
     // Scope hosting
@@ -82,7 +89,10 @@ const config = Object.assign(webpackConfigBase.config, {
       template: webpackConfigBase.resolve('src/index.html'),
       minify: {
         removeComments: true,
-        collapseWhitespace: false
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        collapseBooleanAttributes: true,
+        removeScriptTypeAttributes: true
       }
     }),
     // 定义全局常量
