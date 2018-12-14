@@ -48,6 +48,7 @@ module.exports = {
         "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
         "no-console": 0,
         // vue rules
-        "vue/html-self-closing": 0
+        "vue/html-self-closing": 0,
+        "vue/component-name-in-template-casing": 0
     }
 };

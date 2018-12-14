@@ -1,3 +1,5 @@
 <template>
-  <div class="cb-dog">dog</div>
+  <div class="cb-dog">
+    dog
+  </div>
 </template>
