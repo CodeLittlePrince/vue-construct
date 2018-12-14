@@ -47,9 +47,11 @@ app.use(async (ctx, next) => {
 // 模拟数据返回
 const mockRoot = '../mock'
 app.use(async (ctx, next) => {
-  if (!ctx.path.startsWith('/mock-switch')) {
-  // 计时
-    const start = new Date()
+  if (!ctx.path.startsWith('/mock-switch') &&
+      ctx.path !== '/' &&
+      ctx.path !== '/favicon.ico' &&
+      ctx.path.indexOf('hot-update.json') === -1
+  ) {
     // 模拟
     let path = ctx.path
     let params = {}
@@ -70,9 +72,6 @@ app.use(async (ctx, next) => {
       ctx.body = mockHandle(params)
     }
     await next()
-    // 打印时间
-    const ms = new Date() - start
-    console.log(`${ctx.method} ${ctx.url} - \x1b[32m${ms}ms`)
   }
 })
 
@@ -82,5 +81,13 @@ app.on('error', (err, ctx) => {
 })
 
 // 注意：这里的端口要和webpack里devServer的端口对应
-console.log('Project proxy is running at', `\x1b[34m\x1b[1m${proxyConfig.domain}:${proxyConfig.port}`)
-app.listen(proxyConfig.port)
+const _server = app.listen(proxyConfig.port)
+
+// 关闭监听保证进程关闭
+;['SIGINT', 'SIGTERM'].forEach(signal => {
+  process.on(signal, () => {
+    _server.close(() => {
+      process.exit(0)
+    })
+  })
+})
